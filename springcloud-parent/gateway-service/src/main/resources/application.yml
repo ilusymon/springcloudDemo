@@ -1,0 +1,20 @@
+# 注释版本
+server:
+  port: 18084
+spring:
+  application:
+    # 应用名
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # 用户所有以/user开始的请求，都给http://localhost:18081服务处理
+        #id唯一标识，可自定义 , 随便写，可以写小红，小花都行
+        - id: user-service-route
+          #路由的服务地址
+          uri: http://localhost:18081
+          # 路由拦截的地址配置（断言）
+          # /user/**所有以/user开始的请求都将被路由到uri指定的服务地址，
+          # 将该请求交给uri指定的服务处理，比如请求：http://localhost:18084/user/find/2会把请求交给http://localhost:18081/user/find/2处理
+          predicates:
+            - Path=/user/**
